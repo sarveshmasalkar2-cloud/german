@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GERMAN VERB DOMINATOR — Quiz Prep 2B</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f0ece4;
+    --red: #e63946;
+    --gold: #f4a261;
+    --blue: #457b9d;
+    --green: #2a9d8f;
+    --purple: #7b2d8b;
+    --dim: rgba(240,236,228,0.07);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Space Mono', monospace;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ====== SCANLINE OVERLAY ====== */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px);
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ====== HERO ====== */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: 2rem;
+    background: radial-gradient(ellipse at 50% 40%, #1a0a2e 0%, var(--black) 70%);
+  }
+  #hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    color: var(--red);
+    text-transform: uppercase;
+    animation: fadeDown 0.6s ease both;
+  }
+  .hero-title {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: clamp(3rem, 10vw, 8rem);
+    line-height: 0.9;
+    letter-spacing: -2px;
+    color: var(--white);
+    animation: fadeDown 0.8s 0.1s ease both;
+    text-shadow: 0 0 80px rgba(230,57,70,0.4);
+  }
+  .hero-title span { color: var(--red); }
+  .hero-sub {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    color: rgba(240,236,228,0.6);
+    margin-top: 1rem;
+    animation: fadeDown 0.8s 0.2s ease both;
+  }
+  .hero-badges {
+    display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center;
+    margin-top: 2rem;
+    animation: fadeDown 0.8s 0.3s ease both;
+  }
+  .badge {
+    padding: 0.4rem 1rem;
+    border: 1px solid rgba(240,236,228,0.2);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border-radius: 2px;
+  }
+  .badge.red { border-color: var(--red); color: var(--red); }
+  .badge.gold { border-color: var(--gold); color: var(--gold); }
+  .badge.green { border-color: var(--green); color: var(--green); }
+  .nav-btns {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    margin-top: 3rem;
+    animation: fadeDown 0.8s 0.4s ease both;
+  }
+  .nav-btn {
+    padding: 0.9rem 2rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none; cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .nav-btn.primary { background: var(--red); color: var(--white); }
+  .nav-btn.primary:hover { background: #ff4757; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(230,57,70,0.4); }
+  .nav-btn.secondary { background: transparent; color: var(--white); border: 1px solid rgba(240,236,228,0.3); }
+  .nav-btn.secondary:hover { background: rgba(240,236,228,0.08); }
+  .nav-btn.gold-btn { background: var(--gold); color: var(--black); }
+  .nav-btn.gold-btn:hover { background: #ffc17a; transform: translateY(-2px); }
+
+  /* ====== SECTION SHELL ====== */
+  section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem;
+  }
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1;
+    margin-bottom: 2.5rem;
+  }
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, var(--red), transparent);
+    margin-bottom: 3rem;
+  }
+
+  /* ====== PASSIVE AUDIO ====== */
+  #audio-section {
+    background: linear-gradient(135deg, #0a0a0a 0%, #12071f 100%);
+    border-top: 1px solid rgba(240,236,228,0.05);
+    border-bottom: 1px solid rgba(240,236,228,0.05);
+  }
+  #audio-section > div { max-width: 1100px; margin: 0 auto; padding: 5rem 1.5rem; }
+  .audio-player-box {
+    background: rgba(240,236,228,0.04);
+    border: 1px solid rgba(240,236,228,0.1);
+    border-radius: 4px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .audio-player-box::before {
+    content: '🔊';
+    position: absolute;
+    right: 2rem; top: 50%;
+    transform: translateY(-50%);
+    font-size: 6rem;
+    opacity: 0.06;
+  }
+  .audio-controls {
+    display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; margin-top: 1.5rem;
+  }
+  .audio-btn {
+    padding: 0.7rem 1.4rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    border: 1px solid;
+    background: transparent;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+  .audio-btn.play { border-color: var(--green); color: var(--green); }
+  .audio-btn.play:hover, .audio-btn.play.active { background: var(--green); color: var(--black); }
+  .audio-btn.pause { border-color: var(--gold); color: var(--gold); }
+  .audio-btn.pause:hover { background: var(--gold); color: var(--black); }
+  .audio-btn.stop-btn { border-color: var(--red); color: var(--red); }
+  .audio-btn.stop-btn:hover { background: var(--red); color: var(--white); }
+  .speed-control { display: flex; align-items: center; gap: 0.8rem; margin-left: auto; }
+  .speed-control label { font-size: 0.7rem; color: rgba(240,236,228,0.5); }
+  .speed-control select {
+    background: rgba(240,236,228,0.1);
+    border: 1px solid rgba(240,236,228,0.2);
+    color: var(--white);
+    font-family: 'Space Mono', monospace;
+    padding: 0.4rem;
+    font-size: 0.75rem;
+  }
+  #now-saying {
+    margin-top: 1.5rem;
+    padding: 1rem 1.5rem;
+    background: rgba(230,57,70,0.1);
+    border-left: 3px solid var(--red);
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    min-height: 3.5rem;
+    display: flex; align-items: center;
+    transition: all 0.3s;
+  }
+  .now-de { font-size: 1.4rem; font-weight: 700; color: var(--white); }
+  .now-en { font-size: 0.9rem; color: rgba(240,236,228,0.5); margin-left: 1rem; }
+  .queue-counter {
+    font-size: 0.7rem;
+    color: rgba(240,236,228,0.4);
+    margin-top: 0.8rem;
+    letter-spacing: 0.1em;
+  }
+  .loop-opts { display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
+  .loop-opt {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.65rem;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid rgba(240,236,228,0.15);
+    color: rgba(240,236,228,0.5);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .loop-opt.active { border-color: var(--gold); color: var(--gold); }
+
+  /* ====== VERB TABLES ====== */
+  .verb-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .verb-card {
+    background: var(--dim);
+    border: 1px solid rgba(240,236,228,0.08);
+    border-radius: 3px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .verb-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.5); }
+  .verb-card-header {
+    padding: 1rem 1.2rem 0.8rem;
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .verb-de {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 1.5rem;
+  }
+  .verb-en {
+    font-size: 0.75rem;
+    color: rgba(240,236,228,0.5);
+    font-style: italic;
+  }
+  .pattern-tag {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    text-transform: uppercase;
+  }
+  .pat-aa { background: rgba(244,162,97,0.2); color: var(--gold); }
+  .pat-auau { background: rgba(69,123,157,0.2); color: #a8d8ea; }
+  .pat-ei { background: rgba(42,157,143,0.2); color: var(--green); }
+  .pat-eie { background: rgba(123,45,139,0.2); color: #c77dff; }
+  .conj-table { width: 100%; border-collapse: collapse; }
+  .conj-table td {
+    padding: 0.35rem 1.2rem;
+    font-size: 0.78rem;
+    border-bottom: 1px solid rgba(240,236,228,0.04);
+  }
+  .conj-table tr:last-child td { border-bottom: none; }
+  .conj-table .pronoun { color: rgba(240,236,228,0.35); width: 50%; }
+  .conj-table .form { color: var(--white); font-weight: 700; }
+  .conj-table .changed { color: var(--gold); }
+  .conj-table tr:hover td { background: rgba(240,236,228,0.04); }
+
+  /* vocab list */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+  }
+  .vocab-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.65rem 1rem;
+    background: var(--dim);
+    border: 1px solid rgba(240,236,228,0.07);
+    border-radius: 2px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .vocab-item:hover { background: rgba(240,236,228,0.1); }
+  .vocab-de { font-weight: 700; color: var(--white); }
+  .vocab-en { color: rgba(240,236,228,0.5); font-size: 0.75rem; }
+  .vocab-item.flip .vocab-en { color: var(--white); }
+  .vocab-item.flip .vocab-de { color: rgba(240,236,228,0.5); }
+
+  /* ====== FLASHCARDS ====== */
+  #flashcard-section { background: #070707; }
+  #flashcard-section > div { max-width: 1100px; margin: 0 auto; padding: 5rem 1.5rem; }
+  .flashcard-area {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 2rem;
+  }
+  .card-progress {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: rgba(240,236,228,0.4);
+    text-transform: uppercase;
+  }
+  .card-wrap {
+    width: 100%;
+    max-width: 540px;
+    height: 280px;
+    perspective: 1200px;
+    cursor: pointer;
+  }
+  .card-inner {
+    width: 100%; height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+  .card-inner.flipped { transform: rotateY(180deg); }
+  .card-face {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 6px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 2rem;
+    text-align: center;
+  }
+  .card-front {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border: 1px solid rgba(240,236,228,0.12);
+  }
+  .card-back {
+    background: linear-gradient(135deg, #1a0808 0%, #2d0a0a 100%);
+    border: 1px solid rgba(230,57,70,0.3);
+    transform: rotateY(180deg);
+  }
+  .card-prompt { font-size: 0.65rem; letter-spacing: 0.3em; color: rgba(240,236,228,0.35); margin-bottom: 0.8rem; text-transform: uppercase; }
+  .card-main {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    color: var(--white);
+  }
+  .card-sub { font-size: 0.85rem; color: rgba(240,236,228,0.5); margin-top: 0.5rem; }
+  .card-conj {
+    font-size: 0.78rem;
+    color: rgba(240,236,228,0.7);
+    margin-top: 1rem;
+    line-height: 1.8;
+  }
+  .card-conj .ch { color: var(--gold); font-weight: 700; }
+  .card-nav {
+    display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; justify-content: center;
+  }
+  .fc-btn {
+    padding: 0.8rem 1.8rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: none; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .fc-btn.prev { background: rgba(240,236,228,0.08); color: var(--white); }
+  .fc-btn.prev:hover { background: rgba(240,236,228,0.15); }
+  .fc-btn.next { background: var(--red); color: var(--white); }
+  .fc-btn.next:hover { background: #ff4757; }
+  .fc-btn.shuffle { background: rgba(244,162,97,0.15); color: var(--gold); border: 1px solid rgba(244,162,97,0.3); }
+  .fc-btn.shuffle:hover { background: var(--gold); color: var(--black); }
+  .card-hint { font-size: 0.65rem; color: rgba(240,236,228,0.25); text-transform: uppercase; letter-spacing: 0.2em; }
+  .deck-filter {
+    display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;
+  }
+  .deck-btn {
+    padding: 0.4rem 1rem;
+    font-size: 0.65rem;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid rgba(240,236,228,0.15);
+    background: transparent;
+    color: rgba(240,236,228,0.5);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .deck-btn.active { border-color: var(--red); color: var(--red); background: rgba(230,57,70,0.1); }
+
+  /* ====== QUIZ ====== */
+  #quiz-section { background: linear-gradient(180deg, #050510 0%, #0a0a0a 100%); }
+  #quiz-section > div { max-width: 800px; margin: 0 auto; padding: 5rem 1.5rem; }
+  .quiz-modes {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 3rem;
+  }
+  .quiz-mode-btn {
+    padding: 1.5rem;
+    background: var(--dim);
+    border: 1px solid rgba(240,236,228,0.1);
+    color: var(--white);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+  }
+  .quiz-mode-btn .qm-title { font-size: 1rem; font-family: 'Syne', sans-serif; font-weight: 700; display: block; margin-bottom: 0.3rem; }
+  .quiz-mode-btn:hover, .quiz-mode-btn.active { border-color: var(--gold); background: rgba(244,162,97,0.08); }
+  #quiz-box { display: none; }
+  #quiz-box.visible { display: block; }
+  .quiz-question {
+    background: var(--dim);
+    border: 1px solid rgba(240,236,228,0.1);
+    border-radius: 4px;
+    padding: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .q-meta { font-size: 0.65rem; letter-spacing: 0.3em; color: var(--red); text-transform: uppercase; margin-bottom: 1rem; }
+  .q-text {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    margin-bottom: 0.5rem;
+    color: var(--white);
+  }
+  .q-context { font-size: 0.85rem; color: rgba(240,236,228,0.5); }
+  .quiz-options {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 1.5rem;
+  }
+  .q-opt {
+    padding: 1rem 1.2rem;
+    background: rgba(240,236,228,0.05);
+    border: 1px solid rgba(240,236,228,0.1);
+    color: var(--white);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: left;
+    border-radius: 3px;
+  }
+  .q-opt:hover:not(:disabled) { background: rgba(240,236,228,0.12); border-color: rgba(240,236,228,0.3); }
+  .q-opt.correct { background: rgba(42,157,143,0.25); border-color: var(--green); color: var(--green); }
+  .q-opt.wrong { background: rgba(230,57,70,0.2); border-color: var(--red); color: var(--red); }
+  .q-opt:disabled { cursor: default; }
+  .quiz-feedback {
+    min-height: 3rem;
+    padding: 1rem 1.2rem;
+    font-size: 0.9rem;
+    border-radius: 3px;
+    margin-bottom: 1rem;
+    display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.ok { background: rgba(42,157,143,0.15); border: 1px solid var(--green); color: var(--green); }
+  .quiz-feedback.err { background: rgba(230,57,70,0.15); border: 1px solid var(--red); color: var(--red); }
+  .quiz-score-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 2rem; padding: 0.8rem 1.2rem;
+    background: var(--dim);
+    border: 1px solid rgba(240,236,228,0.08);
+    font-size: 0.78rem;
+    color: rgba(240,236,228,0.6);
+  }
+  .score-num { font-family: 'Black Han Sans', sans-serif; font-size: 1.4rem; color: var(--gold); }
+  #q-next {
+    padding: 0.9rem 2.5rem;
+    background: var(--red); color: var(--white);
+    border: none; font-family: 'Space Mono', monospace;
+    font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s;
+    display: none;
+  }
+  #q-next:hover { background: #ff4757; transform: translateY(-2px); }
+  #q-next.show { display: inline-block; }
+
+  /* ====== TYPE IT QUIZ ====== */
+  .type-input {
+    width: 100%; padding: 1rem 1.2rem;
+    background: rgba(240,236,228,0.05);
+    border: 1px solid rgba(240,236,228,0.2);
+    border-radius: 3px;
+    color: var(--white);
+    font-family: 'Space Mono', monospace;
+    font-size: 1.1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 1rem;
+  }
+  .type-input:focus { border-color: var(--gold); }
+  .type-input.correct-input { border-color: var(--green); background: rgba(42,157,143,0.1); }
+  .type-input.wrong-input { border-color: var(--red); background: rgba(230,57,70,0.08); }
+  .special-chars {
+    display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;
+  }
+  .sc-btn {
+    padding: 0.4rem 0.8rem;
+    background: rgba(240,236,228,0.08);
+    border: 1px solid rgba(240,236,228,0.15);
+    color: var(--white);
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    transition: all 0.2s;
+    border-radius: 2px;
+  }
+  .sc-btn:hover { background: rgba(240,236,228,0.18); }
+
+  /* ====== CHEAT SHEET ====== */
+  #cheat-section {
+    background: #050505;
+    border-top: 2px solid var(--red);
+  }
+  #cheat-section > div { max-width: 1100px; margin: 0 auto; padding: 5rem 1.5rem; }
+  .cheat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .cheat-card {
+    background: var(--dim);
+    border: 1px solid rgba(240,236,228,0.07);
+    padding: 1.2rem;
+    border-radius: 3px;
+  }
+  .cheat-verb {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 1.3rem;
+    color: var(--white);
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 0.5rem;
+  }
+  .cheat-verb small { font-size: 0.7rem; color: rgba(240,236,228,0.4); font-family: 'Space Mono', monospace; font-weight: normal; }
+  .cheat-row {
+    display: flex; justify-content: space-between;
+    font-size: 0.75rem;
+    padding: 0.2rem 0;
+    border-bottom: 1px solid rgba(240,236,228,0.04);
+  }
+  .cheat-row:last-child { border-bottom: none; }
+  .cheat-pr { color: rgba(240,236,228,0.35); }
+  .cheat-form { font-weight: 700; color: var(--white); }
+  .cheat-form.highlight { color: var(--gold); }
+
+  /* ====== ANIMATIONS ====== */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(230,57,70,0.3); }
+    50% { box-shadow: 0 0 40px rgba(230,57,70,0.6); }
+  }
+  .pulse { animation: pulse 2s ease infinite; }
+  .speaking { animation: glow 1s ease infinite; }
+
+  /* ====== STICKY NAV ====== */
+  #sticky-nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(240,236,228,0.08);
+    display: flex; gap: 0; align-items: center;
+    padding: 0 1.5rem;
+    height: 52px;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+  }
+  #sticky-nav.visible { transform: translateY(0); }
+  #sticky-nav a {
+    color: rgba(240,236,228,0.5);
+    text-decoration: none;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0 1.2rem;
+    height: 100%;
+    display: flex; align-items: center;
+    border-right: 1px solid rgba(240,236,228,0.06);
+    transition: color 0.2s;
+  }
+  #sticky-nav a:hover { color: var(--white); }
+  #sticky-nav a:first-child { border-left: 1px solid rgba(240,236,228,0.06); }
+  #sticky-nav .nav-logo {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 1.1rem;
+    color: var(--red);
+    margin-right: auto;
+    padding: 0;
+    border: none;
+    border-right: none;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 2px; }
+
+  @media (max-width: 600px) {
+    .quiz-options { grid-template-columns: 1fr; }
+    #sticky-nav a { padding: 0 0.7rem; font-size: 0.55rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav id="sticky-nav">
+  <span class="nav-logo">GVD</span>
+  <a href="#audio-section">🔊 Audio</a>
+  <a href="#verbs-section">📋 Verbs</a>
+  <a href="#flashcard-section">🃏 Cards</a>
+  <a href="#quiz-section">🧠 Quiz</a>
+  <a href="#cheat-section">📌 Sheet</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <p class="hero-eyebrow">Lektion 2B · Strukturen · Quiz Prep</p>
+  <h1 class="hero-title">GERMAN<br><span>VERB</span><br>DOMINATOR</h1>
+  <p class="hero-sub">Stem-changing verbs mastered. Quiz aced. Sanity preserved.</p>
+  <div class="hero-badges">
+    <span class="badge red">🧠 Spaced Repetition</span>
+    <span class="badge gold">🔊 Passive Audio Loop</span>
+    <span class="badge green">⚡ Active Quiz Engine</span>
+  </div>
+  <div class="nav-btns">
+    <a href="#audio-section" class="nav-btn primary">▶ Start Audio Loop</a>
+    <a href="#flashcard-section" class="nav-btn gold-btn">🃏 Flashcards</a>
+    <a href="#quiz-section" class="nav-btn secondary">🧠 Quiz Me</a>
+    <a href="#cheat-section" class="nav-btn secondary">📌 Cheat Sheet</a>
+  </div>
+</section>
+
+<!-- ====== PASSIVE AUDIO ====== -->
+<section id="audio-section">
+  <div>
+    <p class="section-label">Method #1 — Passive Audio Learning</p>
+    <h2 class="section-title">Background Audio Loop</h2>
+    <div class="divider"></div>
+    <p style="color:rgba(240,236,228,0.6); font-size:0.9rem; margin-bottom:2rem; max-width:600px; line-height:1.8;">
+      Hit play and let it run while you do homework, eat, chill, whatever. Your brain absorbs the patterns subconsciously. This uses the <strong style="color:var(--gold)">Serial Position Effect</strong> and <strong style="color:var(--gold)">Mere Exposure Theory</strong> — repetition literally rewires your neural pathways. No active effort required.
+    </p>
+    <div class="audio-player-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <div style="font-family:'Black Han Sans',sans-serif; font-size:1.4rem; color:var(--white);">Auto-Pronunciation Loop</div>
+          <div style="font-size:0.75rem; color:rgba(240,236,228,0.4); margin-top:0.3rem;">Uses Web Speech API · All 40+ verb forms · Loops forever</div>
+        </div>
+        <div style="font-size:0.7rem; color:rgba(240,236,228,0.35); text-align:right;">
+          <div id="loop-count">Loops: 0</div>
+          <div id="total-items" style="margin-top:0.2rem;"></div>
+        </div>
+      </div>
+      <div id="now-saying">
+        <span style="color:rgba(240,236,228,0.3); font-size:0.85rem; font-style:italic;">Press play to begin passive learning...</span>
+      </div>
+      <div class="audio-controls">
+        <button class="audio-btn play" id="btn-play" onclick="startAudio()">▶ Play</button>
+        <button class="audio-btn pause" id="btn-pause" onclick="pauseAudio()">⏸ Pause</button>
+        <button class="audio-btn stop-btn" onclick="stopAudio()">⏹ Stop</button>
+        <div class="speed-control">
+          <label>Speed</label>
+          <select id="speech-speed" onchange="changeSpeed()">
+            <option value="0.7">0.7× (learn)</option>
+            <option value="0.9" selected>0.9× (normal)</option>
+            <option value="1.0">1.0× (fast)</option>
+            <option value="1.2">1.2× (drill)</option>
+          </select>
+        </div>
+      </div>
+      <div class="loop-opts">
+        <span style="font-size:0.65rem; color:rgba(240,236,228,0.35); align-self:center;">MODE:</span>
+        <button class="loop-opt active" id="mode-vocab" onclick="setMode('vocab')">Vocab Only</button>
+        <button class="loop-opt" id="mode-conj" onclick="setMode('conj')">Conjugations</button>
+        <button class="loop-opt" id="mode-both" onclick="setMode('both')">Both (Full)</button>
+        <button class="loop-opt" id="mode-shuffle" onclick="setMode('shuffle')">Shuffled</button>
+      </div>
+      <div class="queue-counter" id="queue-info">Mode: Vocab Only — Saying German → English</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== VERB TABLES ====== -->
+<section id="verbs-section">
+  <p class="section-label">Reference — All Verbs</p>
+  <h2 class="section-title">Stem-Changing Verb Tables</h2>
+  <div class="divider"></div>
+  <p style="color:rgba(240,236,228,0.5); font-size:0.82rem; margin-bottom:1.5rem;">🟡 Gold = stem-changed form. Click any vocab item to flip DE/EN.</p>
+
+  <h3 style="font-family:'Syne',sans-serif; font-size:1rem; color:var(--gold); margin-bottom:1rem; letter-spacing:0.2em; text-transform:uppercase;">a → ä</h3>
+  <div class="verb-grid" id="grid-aa"></div>
+
+  <h3 style="font-family:'Syne',sans-serif; font-size:1rem; color:#a8d8ea; margin:3rem 0 1rem; letter-spacing:0.2em; text-transform:uppercase;">au → äu</h3>
+  <div class="verb-grid" id="grid-auau"></div>
+
+  <h3 style="font-family:'Syne',sans-serif; font-size:1rem; color:var(--green); margin:3rem 0 1rem; letter-spacing:0.2em; text-transform:uppercase;">e → i</h3>
+  <div class="verb-grid" id="grid-ei"></div>
+
+  <h3 style="font-family:'Syne',sans-serif; font-size:1rem; color:#c77dff; margin:3rem 0 1rem; letter-spacing:0.2em; text-transform:uppercase;">e → ie</h3>
+  <div class="verb-grid" id="grid-eie"></div>
+
+  <h3 style="font-family:'Syne',sans-serif; font-size:1rem; color:rgba(240,236,228,0.7); margin:3rem 0 1rem; letter-spacing:0.2em; text-transform:uppercase;">Vocabulary — All Verbs (click to flip)</h3>
+  <div class="vocab-grid" id="vocab-grid"></div>
+</section>
+
+<!-- ====== FLASHCARDS ====== -->
+<section id="flashcard-section">
+  <div>
+    <p class="section-label">Method #2 — Active Recall</p>
+    <h2 class="section-title">Flashcard Drill</h2>
+    <div class="divider"></div>
+    <div class="deck-filter" style="margin-bottom:2rem;">
+      <button class="deck-btn active" onclick="setDeck('all')">All</button>
+      <button class="deck-btn" onclick="setDeck('vocab')">Vocab EN↔DE</button>
+      <button class="deck-btn" onclick="setDeck('conj')">Conjugations</button>
+      <button class="deck-btn" onclick="setDeck('aa')">a→ä</button>
+      <button class="deck-btn" onclick="setDeck('auau')">au→äu</button>
+      <button class="deck-btn" onclick="setDeck('ei')">e→i</button>
+      <button class="deck-btn" onclick="setDeck('eie')">e→ie</button>
+    </div>
+    <div class="flashcard-area">
+      <div class="card-progress" id="card-progress">Card 1 / 1</div>
+      <div class="card-wrap" onclick="flipCard()" id="card-wrap">
+        <div class="card-inner" id="card-inner">
+          <div class="card-face card-front" id="card-front">
+            <div class="card-prompt">German → English</div>
+            <div class="card-main" id="cf-main">schlafen</div>
+            <div class="card-sub" id="cf-sub">(click to reveal)</div>
+          </div>
+          <div class="card-face card-back" id="card-back">
+            <div class="card-prompt">Answer</div>
+            <div class="card-main" id="cb-main">to sleep</div>
+            <div class="card-conj" id="cb-conj"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-hint">Click card to flip · Use buttons to navigate</div>
+      <div class="card-nav">
+        <button class="fc-btn prev" onclick="prevCard()">← Prev</button>
+        <button class="fc-btn shuffle" onclick="shuffleDeck()">🔀 Shuffle</button>
+        <button class="fc-btn next" onclick="nextCard()">Next →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== QUIZ ====== -->
+<section id="quiz-section">
+  <div>
+    <p class="section-label">Method #3 — Testing Effect</p>
+    <h2 class="section-title">Quiz Engine</h2>
+    <div class="divider"></div>
+    <div class="quiz-modes">
+      <button class="quiz-mode-btn active" onclick="startQuiz('mc-de-en')" id="qmode-mc-de-en">
+        <span class="qm-title">DE → EN</span>
+        Multiple choice · German to English
+      </button>
+      <button class="quiz-mode-btn" onclick="startQuiz('mc-en-de')" id="qmode-mc-en-de">
+        <span class="qm-title">EN → DE</span>
+        Multiple choice · English to German
+      </button>
+      <button class="quiz-mode-btn" onclick="startQuiz('conj')" id="qmode-conj">
+        <span class="qm-title">Conjugate It</span>
+        Given pronoun + verb, pick right form
+      </button>
+      <button class="quiz-mode-btn" onclick="startQuiz('type')" id="qmode-type">
+        <span class="qm-title">Type It</span>
+        Type the conjugated form (hardest)
+      </button>
+    </div>
+
+    <div class="quiz-score-bar">
+      <span>Score: <span class="score-num" id="score-display">0</span> / <span id="total-display">0</span></span>
+      <span>Streak: <span class="score-num" id="streak-display">0</span> 🔥</span>
+      <span id="pct-display" style="color:rgba(240,236,228,0.4);">—</span>
+    </div>
+
+    <div id="quiz-box" class="visible">
+      <div class="quiz-question">
+        <div class="q-meta" id="q-meta">Question</div>
+        <div class="q-text" id="q-text">Loading...</div>
+        <div class="q-context" id="q-context"></div>
+      </div>
+      <div class="special-chars" id="special-chars" style="display:none;">
+        <span style="font-size:0.65rem; color:rgba(240,236,228,0.35); align-self:center;">Insert:</span>
+        <button class="sc-btn" onclick="insertChar('ä')">ä</button>
+        <button class="sc-btn" onclick="insertChar('ö')">ö</button>
+        <button class="sc-btn" onclick="insertChar('ü')">ü</button>
+        <button class="sc-btn" onclick="insertChar('Ä')">Ä</button>
+        <button class="sc-btn" onclick="insertChar('Ö')">Ö</button>
+        <button class="sc-btn" onclick="insertChar('Ü')">Ü</button>
+        <button class="sc-btn" onclick="insertChar('ß')">ß</button>
+      </div>
+      <input type="text" class="type-input" id="type-input" placeholder="Type your answer..." style="display:none;" onkeydown="typeKeydown(event)">
+      <div class="quiz-options" id="quiz-options"></div>
+      <div class="quiz-feedback" id="quiz-feedback"></div>
+      <button id="q-next" onclick="nextQuestion()">Next Question →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CHEAT SHEET ====== -->
+<section id="cheat-section">
+  <div>
+    <p class="section-label">Quick Reference</p>
+    <h2 class="section-title">Master Cheat Sheet</h2>
+    <div class="divider"></div>
+    <div class="cheat-grid" id="cheat-grid"></div>
+  </div>
+</section>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const VERBS = [
+  // a → ä
+  { de:'schlafen', en:'to sleep', pat:'aa', inf3:'schläft',
+    conj:{ ich:'schlafe', du:'schläfst', 'er/sie/es':'schläft', wir:'schlafen', ihr:'schlaft', 'Sie/sie':'schlafen' },
+    changed:['du','er/sie/es'] },
+  { de:'braten', en:'to fry', pat:'aa', inf3:'brät',
+    conj:{ ich:'brate', du:'brätst', 'er/sie/es':'brät', wir:'braten', ihr:'bratet', 'Sie/sie':'braten' },
+    changed:['du','er/sie/es'] },
+  { de:'fahren', en:'to go/drive', pat:'aa', inf3:'fährt',
+    conj:{ ich:'fahre', du:'fährst', 'er/sie/es':'fährt', wir:'fahren', ihr:'fahrt', 'Sie/sie':'fahren' },
+    changed:['du','er/sie/es'] },
+  { de:'fallen', en:'to fall', pat:'aa', inf3:'fällt',
+    conj:{ ich:'falle', du:'fällst', 'er/sie/es':'fällt', wir:'fallen', ihr:'fallt', 'Sie/sie':'fallen' },
+    changed:['du','er/sie/es'] },
+  { de:'fangen', en:'to catch', pat:'aa', inf3:'fängt',
+    conj:{ ich:'fange', du:'fängst', 'er/sie/es':'fängt', wir:'fangen', ihr:'fangt', 'Sie/sie':'fangen' },
+    changed:['du','er/sie/es'] },
+  { de:'lassen', en:'to let / to allow', pat:'aa', inf3:'lässt',
+    conj:{ ich:'lasse', du:'lässt', 'er/sie/es':'lässt', wir:'lassen', ihr:'lasst', 'Sie/sie':'lassen' },
+    changed:['du','er/sie/es'] },
+  { de:'tragen', en:'to carry / to wear', pat:'aa', inf3:'trägt',
+    conj:{ ich:'trage', du:'trägst', 'er/sie/es':'trägt', wir:'tragen', ihr:'tragt', 'Sie/sie':'tragen' },
+    changed:['du','er/sie/es'] },
+  { de:'waschen', en:'to wash', pat:'aa', inf3:'wäscht',
+    conj:{ ich:'wasche', du:'wäschst', 'er/sie/es':'wäscht', wir:'waschen', ihr:'wascht', 'Sie/sie':'waschen' },
+    changed:['du','er/sie/es'] },
+  // au → äu
+  { de:'laufen', en:'to run', pat:'auau', inf3:'läuft',
+    conj:{ ich:'laufe', du:'läufst', 'er/sie/es':'läuft', wir:'laufen', ihr:'lauft', 'Sie/sie':'laufen' },
+    changed:['du','er/sie/es'] },
+  // e → i
+  { de:'brechen', en:'to break', pat:'ei', inf3:'bricht',
+    conj:{ ich:'breche', du:'brichst', 'er/sie/es':'bricht', wir:'brechen', ihr:'brecht', 'Sie/sie':'brechen' },
+    changed:['du','er/sie/es'] },
+  { de:'essen', en:'to eat', pat:'ei', inf3:'isst',
+    conj:{ ich:'esse', du:'isst', 'er/sie/es':'isst', wir:'essen', ihr:'esst', 'Sie/sie':'essen' },
+    changed:['du','er/sie/es'] },
+  { de:'geben', en:'to give', pat:'ei', inf3:'gibt',
+    conj:{ ich:'gebe', du:'gibst', 'er/sie/es':'gibt', wir:'geben', ihr:'gebt', 'Sie/sie':'geben' },
+    changed:['du','er/sie/es'] },
+  { de:'helfen', en:'to help', pat:'ei', inf3:'hilft',
+    conj:{ ich:'helfe', du:'hilfst', 'er/sie/es':'hilft', wir:'helfen', ihr:'helft', 'Sie/sie':'helfen' },
+    changed:['du','er/sie/es'] },
+  { de:'nehmen', en:'to take', pat:'ei', inf3:'nimmt',
+    conj:{ ich:'nehme', du:'nimmst', 'er/sie/es':'nimmt', wir:'nehmen', ihr:'nehmt', 'Sie/sie':'nehmen' },
+    changed:['du','er/sie/es'] },
+  { de:'sprechen', en:'to speak', pat:'ei', inf3:'spricht',
+    conj:{ ich:'spreche', du:'sprichst', 'er/sie/es':'spricht', wir:'sprechen', ihr:'sprecht', 'Sie/sie':'sprechen' },
+    changed:['du','er/sie/es'] },
+  { de:'treffen', en:'to hit / to meet', pat:'ei', inf3:'trifft',
+    conj:{ ich:'treffe', du:'triffst', 'er/sie/es':'trifft', wir:'treffen', ihr:'trefft', 'Sie/sie':'treffen' },
+    changed:['du','er/sie/es'] },
+  { de:'vergessen', en:'to forget', pat:'ei', inf3:'vergisst',
+    conj:{ ich:'vergesse', du:'vergisst', 'er/sie/es':'vergisst', wir:'vergessen', ihr:'vergesst', 'Sie/sie':'vergessen' },
+    changed:['du','er/sie/es'] },
+  { de:'werden', en:'to become', pat:'ei', inf3:'wird',
+    conj:{ ich:'werde', du:'wirst', 'er/sie/es':'wird', wir:'werden', ihr:'werdet', 'Sie/sie':'werden' },
+    changed:['du','er/sie/es'] },
+  { de:'werfen', en:'to throw', pat:'ei', inf3:'wirft',
+    conj:{ ich:'werfe', du:'wirfst', 'er/sie/es':'wirft', wir:'werfen', ihr:'werft', 'Sie/sie':'werfen' },
+    changed:['du','er/sie/es'] },
+  // e → ie
+  { de:'empfehlen', en:'to recommend', pat:'eie', inf3:'empfiehlt',
+    conj:{ ich:'empfehle', du:'empfiehlst', 'er/sie/es':'empfiehlt', wir:'empfehlen', ihr:'empfehlt', 'Sie/sie':'empfehlen' },
+    changed:['du','er/sie/es'] },
+  { de:'lesen', en:'to read', pat:'eie', inf3:'liest',
+    conj:{ ich:'lese', du:'liest', 'er/sie/es':'liest', wir:'lesen', ihr:'lest', 'Sie/sie':'lesen' },
+    changed:['du','er/sie/es'] },
+  { de:'sehen', en:'to see', pat:'eie', inf3:'sieht',
+    conj:{ ich:'sehe', du:'siehst', 'er/sie/es':'sieht', wir:'sehen', ihr:'seht', 'Sie/sie':'sehen' },
+    changed:['du','er/sie/es'] },
+  { de:'stehlen', en:'to steal', pat:'eie', inf3:'stiehlt',
+    conj:{ ich:'stehle', du:'stiehlst', 'er/sie/es':'stiehlt', wir:'stehlen', ihr:'stehlt', 'Sie/sie':'stehlen' },
+    changed:['du','er/sie/es'] },
+];
+
+const PRONOUNS = ['ich','du','er/sie/es','wir','ihr','Sie/sie'];
+const PAT_LABEL = { aa:'a → ä', auau:'au → äu', ei:'e → i', eie:'e → ie' };
+const PAT_CSS = { aa:'pat-aa', auau:'pat-auau', ei:'pat-ei', eie:'pat-eie' };
+
+// ============================================================
+// RENDER VERB TABLES
+// ============================================================
+function buildVerbCard(v) {
+  const rows = PRONOUNS.map(p => {
+    const ch = v.changed.includes(p);
+    return `<tr>
+      <td class="pronoun">${p}</td>
+      <td class="form ${ch?'changed':''}">${v.conj[p]}</td>
+    </tr>`;
+  }).join('');
+  return `<div class="verb-card">
+    <div class="verb-card-header">
+      <div>
+        <div class="verb-de">${v.de}</div>
+        <div class="verb-en">${v.en}</div>
+      </div>
+      <span class="pattern-tag ${PAT_CSS[v.pat]}">${PAT_LABEL[v.pat]}</span>
+    </div>
+    <table class="conj-table">${rows}</table>
+  </div>`;
+}
+
+document.getElementById('grid-aa').innerHTML = VERBS.filter(v=>v.pat==='aa').map(buildVerbCard).join('');
+document.getElementById('grid-auau').innerHTML = VERBS.filter(v=>v.pat==='auau').map(buildVerbCard).join('');
+document.getElementById('grid-ei').innerHTML = VERBS.filter(v=>v.pat==='ei').map(buildVerbCard).join('');
+document.getElementById('grid-eie').innerHTML = VERBS.filter(v=>v.pat==='eie').map(buildVerbCard).join('');
+
+// vocab grid
+const vocabEl = document.getElementById('vocab-grid');
+VERBS.forEach(v => {
+  const d = document.createElement('div');
+  d.className = 'vocab-item';
+  d.innerHTML = `<span class="vocab-de">${v.de}</span><span class="vocab-en">${v.en}</span>`;
+  d.onclick = () => d.classList.toggle('flip');
+  vocabEl.appendChild(d);
+});
+
+// cheat sheet
+const cheatEl = document.getElementById('cheat-grid');
+VERBS.forEach(v => {
+  const rows = PRONOUNS.map(p => {
+    const ch = v.changed.includes(p);
+    return `<div class="cheat-row"><span class="cheat-pr">${p}</span><span class="cheat-form ${ch?'highlight':''}">${v.conj[p]}</span></div>`;
+  }).join('');
+  cheatEl.innerHTML += `<div class="cheat-card">
+    <div class="cheat-verb">${v.de} <small>${v.en} · ${PAT_LABEL[v.pat]}</small></div>
+    ${rows}
+  </div>`;
+});
+
+// ============================================================
+// AUDIO — Web Speech API Passive Loop
+// ============================================================
+let speechQueue = [];
+let speechIdx = 0;
+let isSpeaking = false;
+let isPaused = false;
+let loopCount = 0;
+let audioMode = 'vocab';
+let speechRate = 0.9;
+
+function buildQueue(mode) {
+  const q = [];
+  if (mode === 'vocab' || mode === 'both') {
+    VERBS.forEach(v => {
+      q.push({ de: v.de, en: v.en, type: 'vocab' });
+    });
+  }
+  if (mode === 'conj' || mode === 'both') {
+    VERBS.forEach(v => {
+      PRONOUNS.forEach(p => {
+        q.push({ de: `${p} ${v.conj[p]}`, en: `${p} — ${v.en.replace('to ','')}`, type: 'conj', verb: v.de });
+      });
+    });
+  }
+  if (mode === 'shuffle') {
+    VERBS.forEach(v => {
+      q.push({ de: v.de, en: v.en, type: 'vocab' });
+    });
+    VERBS.forEach(v => {
+      PRONOUNS.forEach(p => {
+        q.push({ de: `${p} ${v.conj[p]}`, en: `${p} ${v.en.replace('to ','')}`, type: 'conj', verb: v.de });
+      });
+    });
+    for (let i = q.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [q[i], q[j]] = [q[j], q[i]];
+    }
+  }
+  return q;
+}
+
+document.getElementById('total-items').textContent = `Items in queue: ${buildQueue('vocab').length}`;
+
+function setMode(mode) {
+  audioMode = mode;
+  document.querySelectorAll('.loop-opt').forEach(b => b.classList.remove('active'));
+  document.getElementById('mode-' + mode).classList.add('active');
+  const labels = { vocab:'Vocab Only', conj:'Conjugations Only', both:'Full Deck', shuffle:'Shuffled' };
+  document.getElementById('queue-info').textContent = `Mode: ${labels[mode]} — Saying German → English`;
+  if (isSpeaking) { stopAudio(); startAudio(); }
+}
+
+function changeSpeed() {
+  speechRate = parseFloat(document.getElementById('speech-speed').value);
+}
+
+function speakItem(item) {
+  return new Promise(resolve => {
+    const u1 = new SpeechSynthesisUtterance(item.de);
+    u1.lang = 'de-DE'; u1.rate = speechRate;
+    const u2 = new SpeechSynthesisUtterance(item.en);
+    u2.lang = 'en-US'; u2.rate = speechRate;
+    const ns = document.getElementById('now-saying');
+    ns.innerHTML = `<span class="now-de">${item.de}</span><span class="now-en">→ ${item.en}</span>`;
+    ns.classList.add('speaking');
+    u1.onend = () => {
+      setTimeout(() => {
+        speechSynthesis.speak(u2);
+      }, 400);
+    };
+    u2.onend = () => {
+      ns.classList.remove('speaking');
+      setTimeout(resolve, 600);
+    };
+    u2.onerror = resolve;
+    speechSynthesis.speak(u1);
+  });
+}
+
+async function runLoop() {
+  speechQueue = buildQueue(audioMode);
+  document.getElementById('total-items').textContent = `Items: ${speechQueue.length}`;
+  while (isSpeaking) {
+    for (speechIdx = 0; speechIdx < speechQueue.length && isSpeaking; speechIdx++) {
+      if (isPaused) { await new Promise(r => { const iv = setInterval(() => { if (!isPaused) { clearInterval(iv); r(); } }, 200); }); }
+      await speakItem(speechQueue[speechIdx]);
+      document.getElementById('queue-info').textContent = `Item ${speechIdx+1}/${speechQueue.length} · Loop #${loopCount+1}`;
+    }
+    loopCount++;
+    document.getElementById('loop-count').textContent = `Loops: ${loopCount}`;
+  }
+}
+
+function startAudio() {
+  if (isSpeaking) return;
+  isSpeaking = true; isPaused = false;
+  document.getElementById('btn-play').classList.add('active');
+  runLoop();
+}
+function pauseAudio() {
+  isPaused = !isPaused;
+  if (isPaused) { speechSynthesis.pause(); document.getElementById('btn-pause').textContent = '▶ Resume'; }
+  else { speechSynthesis.resume(); document.getElementById('btn-pause').textContent = '⏸ Pause'; }
+}
+function stopAudio() {
+  isSpeaking = false; isPaused = false;
+  speechSynthesis.cancel();
+  document.getElementById('btn-play').classList.remove('active');
+  document.getElementById('btn-pause').textContent = '⏸ Pause';
+  document.getElementById('now-saying').innerHTML = '<span style="color:rgba(240,236,228,0.3); font-size:0.85rem; font-style:italic;">Stopped.</span>';
+}
+
+// ============================================================
+// FLASHCARDS
+// ============================================================
+let cards = [];
+let cardIdx = 0;
+let currentDeck = 'all';
+
+function buildCards(deck) {
+  const out = [];
+  const verbs = deck === 'aa' ? VERBS.filter(v=>v.pat==='aa')
+    : deck === 'auau' ? VERBS.filter(v=>v.pat==='auau')
+    : deck === 'ei' ? VERBS.filter(v=>v.pat==='ei')
+    : deck === 'eie' ? VERBS.filter(v=>v.pat==='eie')
+    : VERBS;
+
+  if (deck === 'conj') {
+    VERBS.forEach(v => {
+      PRONOUNS.forEach(p => {
+        out.push({ front: `${p} + ${v.de}`, back: v.conj[p], conj: null, en: v.en, pat: PAT_LABEL[v.pat] });
+      });
+    });
+  } else if (deck === 'vocab') {
+    VERBS.forEach(v => {
+      out.push({ front: v.de, back: v.en, conj: buildConjStr(v), en: v.en, pat: PAT_LABEL[v.pat] });
+      out.push({ front: v.en, back: v.de, conj: buildConjStr(v), en: v.en, pat: PAT_LABEL[v.pat] });
+    });
+  } else {
+    verbs.forEach(v => {
+      out.push({ front: v.de, back: v.en, conj: buildConjStr(v), en: v.en, pat: PAT_LABEL[v.pat] });
+    });
+    if (deck === 'all') {
+      PRONOUNS.forEach(p => {
+        VERBS.forEach(v => {
+          out.push({ front: `${p} + ${v.de}?`, back: v.conj[p], conj: null, en: v.en, pat: PAT_LABEL[v.pat] });
+        });
+      });
+    }
+  }
+  return out;
+}
+
+function buildConjStr(v) {
+  return PRONOUNS.map(p => {
+    const ch = v.changed.includes(p);
+    return `<span>${p}: <span class="${ch?'ch':''}">${v.conj[p]}</span></span>`;
+  }).join(' · ');
+}
+
+function setDeck(d) {
+  currentDeck = d;
+  document.querySelectorAll('.deck-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  cards = buildCards(d);
+  cardIdx = 0;
+  showCard();
+}
+
+function showCard() {
+  if (!cards.length) return;
+  const c = cards[cardIdx];
+  document.getElementById('cf-main').textContent = c.front;
+  document.getElementById('cf-sub').textContent = '(click to reveal)';
+  document.getElementById('cb-main').textContent = c.back;
+  document.getElementById('cb-conj').innerHTML = c.conj || `<em style="opacity:0.4">${c.pat}</em>`;
+  document.getElementById('card-inner').classList.remove('flipped');
+  document.getElementById('card-progress').textContent = `Card ${cardIdx+1} / ${cards.length}`;
+}
+function flipCard() {
+  document.getElementById('card-inner').classList.toggle('flipped');
+}
+function nextCard() {
+  cardIdx = (cardIdx + 1) % cards.length;
+  showCard();
+}
+function prevCard() {
+  cardIdx = (cardIdx - 1 + cards.length) % cards.length;
+  showCard();
+}
+function shuffleDeck() {
+  for (let i = cards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cards[i], cards[j]] = [cards[j], cards[i]];
+  }
+  cardIdx = 0;
+  showCard();
+}
+
+// init cards
+cards = buildCards('all');
+showCard();
+
+// ============================================================
+// QUIZ ENGINE
+// ============================================================
+let quizMode = 'mc-de-en';
+let score = 0, total = 0, streak = 0;
+let currentQ = null;
+
+function startQuiz(mode) {
+  quizMode = mode;
+  document.querySelectorAll('.quiz-mode-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('qmode-' + mode).classList.add('active');
+  document.getElementById('type-input').style.display = 'none';
+  document.getElementById('special-chars').style.display = 'none';
+  document.getElementById('quiz-options').style.display = 'grid';
+  nextQuestion();
+}
+
+function getRandVerb(exclude) {
+  const pool = VERBS.filter(v => v.de !== (exclude||''));
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function nextQuestion() {
+  document.getElementById('quiz-feedback').classList.remove('show','ok','err');
+  document.getElementById('q-next').classList.remove('show');
+  document.getElementById('type-input').value = '';
+  document.getElementById('type-input').classList.remove('correct-input','wrong-input');
+
+  const v = VERBS[Math.floor(Math.random() * VERBS.length)];
+  const p = PRONOUNS[Math.floor(Math.random() * PRONOUNS.length)];
+
+  if (quizMode === 'mc-de-en') {
+    currentQ = { correct: v.en, verb: v };
+    document.getElementById('q-meta').textContent = `German → English · ${PAT_LABEL[v.pat]}`;
+    document.getElementById('q-text').textContent = v.de;
+    document.getElementById('q-context').textContent = '';
+    const distractors = shuffle(VERBS.filter(x=>x.de!==v.de)).slice(0,3).map(x=>x.en);
+    renderMC([v.en, ...distractors], v.en);
+
+  } else if (quizMode === 'mc-en-de') {
+    currentQ = { correct: v.de, verb: v };
+    document.getElementById('q-meta').textContent = `English → German · ${PAT_LABEL[v.pat]}`;
+    document.getElementById('q-text').textContent = v.en;
+    document.getElementById('q-context').textContent = '';
+    const distractors = shuffle(VERBS.filter(x=>x.en!==v.en)).slice(0,3).map(x=>x.de);
+    renderMC([v.de, ...distractors], v.de);
+
+  } else if (quizMode === 'conj') {
+    const correct = v.conj[p];
+    currentQ = { correct, verb: v, pronoun: p };
+    document.getElementById('q-meta').textContent = `Conjugate · ${PAT_LABEL[v.pat]}`;
+    document.getElementById('q-text').textContent = v.de;
+    document.getElementById('q-context').textContent = `Pronoun: ${p}`;
+    // distractors from same verb + other verbs
+    const wrongForms = PRONOUNS.filter(x=>x!==p).map(x=>v.conj[x]);
+    const otherForms = shuffle(VERBS.filter(x=>x.de!==v.de)).slice(0,2).map(x=>x.conj[p]);
+    const pool = shuffle([...new Set([...wrongForms, ...otherForms])].filter(f=>f!==correct)).slice(0,3);
+    renderMC([correct, ...pool], correct);
+
+  } else if (quizMode === 'type') {
+    currentQ = { correct: v.conj[p], verb: v, pronoun: p };
+    document.getElementById('q-meta').textContent = `Type the Form · ${PAT_LABEL[v.pat]}`;
+    document.getElementById('q-text').textContent = v.de;
+    document.getElementById('q-context').textContent = `Type the ${p} form`;
+    document.getElementById('quiz-options').style.display = 'none';
+    document.getElementById('type-input').style.display = 'block';
+    document.getElementById('special-chars').style.display = 'flex';
+    document.getElementById('type-input').focus();
+    return;
+  }
+  document.getElementById('quiz-options').style.display = 'grid';
+  document.getElementById('type-input').style.display = 'none';
+  document.getElementById('special-chars').style.display = 'none';
+}
+
+function renderMC(options, correct) {
+  const container = document.getElementById('quiz-options');
+  container.innerHTML = '';
+  shuffle(options).forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'q-opt';
+    btn.textContent = opt;
+    btn.onclick = () => checkMC(btn, opt === correct, correct, options);
+    container.appendChild(btn);
+  });
+}
+
+function checkMC(btn, isCorrect, correct, options) {
+  document.querySelectorAll('.q-opt').forEach(b => {
+    b.disabled = true;
+    if (b.textContent === correct) b.classList.add('correct');
+  });
+  if (!isCorrect) { btn.classList.add('wrong'); streak = 0; }
+  else { streak++; }
+  score += isCorrect ? 1 : 0;
+  total++;
+  showFeedback(isCorrect, correct);
+  updateScore();
+}
+
+function typeKeydown(e) {
+  if (e.key === 'Enter') checkType();
+}
+
+function checkType() {
+  const input = document.getElementById('type-input');
+  const val = input.value.trim().toLowerCase();
+  const correct = currentQ.correct.toLowerCase();
+  const isCorrect = val === correct;
+  input.classList.add(isCorrect ? 'correct-input' : 'wrong-input');
+  input.disabled = true;
+  score += isCorrect ? 1 : 0;
+  if (!isCorrect) streak = 0; else streak++;
+  total++;
+  showFeedback(isCorrect, currentQ.correct);
+  updateScore();
+}
+
+let typeInputEl = document.getElementById('type-input');
+typeInputEl.addEventListener('blur', () => {
+  if (quizMode === 'type' && !typeInputEl.disabled) checkType();
+});
+
+function showFeedback(correct, answer) {
+  const fb = document.getElementById('quiz-feedback');
+  fb.className = 'quiz-feedback show ' + (correct ? 'ok' : 'err');
+  const v = currentQ.verb;
+  if (correct) {
+    fb.innerHTML = `✅ Correct! <strong>${v.de}</strong> = <strong>${v.en}</strong> · Pattern: ${PAT_LABEL[v.pat]}`;
+  } else {
+    fb.innerHTML = `❌ Correct answer: <strong>${answer}</strong> — <strong>${v.de}</strong> (${v.en}) · Pattern: ${PAT_LABEL[v.pat]}`;
+  }
+  document.getElementById('q-next').classList.add('show');
+}
+
+function updateScore() {
+  document.getElementById('score-display').textContent = score;
+  document.getElementById('total-display').textContent = total;
+  document.getElementById('streak-display').textContent = streak;
+  const pct = total ? Math.round(score/total*100) : 0;
+  const el = document.getElementById('pct-display');
+  el.textContent = `${pct}%`;
+  el.style.color = pct >= 80 ? 'var(--green)' : pct >= 60 ? 'var(--gold)' : 'var(--red)';
+}
+
+function insertChar(ch) {
+  const input = document.getElementById('type-input');
+  const start = input.selectionStart, end = input.selectionEnd;
+  input.value = input.value.substring(0,start) + ch + input.value.substring(end);
+  input.setSelectionRange(start+1, start+1);
+  input.focus();
+}
+
+// init quiz
+startQuiz('mc-de-en');
+
+// ============================================================
+// STICKY NAV
+// ============================================================
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('sticky-nav');
+  if (window.scrollY > 500) nav.classList.add('visible');
+  else nav.classList.remove('visible');
+});
+
+// Keyboard shortcuts for flashcards
+document.addEventListener('keydown', e => {
+  if (['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) return;
+  if (e.key === 'ArrowRight') nextCard();
+  if (e.key === 'ArrowLeft') prevCard();
+  if (e.key === ' ') { e.preventDefault(); flipCard(); }
+});
+</script>
+</body>
+</html>
